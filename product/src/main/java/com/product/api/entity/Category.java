@@ -1,10 +1,20 @@
-package com.product;
+package com.product.api.entity;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
+@Entity
+@Table(name = "category")
 public class Category {
-    private final int category_id;
-    private final String category;
-    private final String tag;
+    
+    @Id
+    private int category_id;
+    private String category;
+    private String tag;
     private int status;
+
+    public Category() {
+    }
 
     public Category(int category_id, String category, String tag) {
         this.category_id = category_id;
@@ -37,6 +47,18 @@ public class Category {
         }
     }
 
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
+    }
+
+    public void setCategory_id(int category_id) {
+        this.category_id = category_id;
+    }
+    
     @Override
     public String toString() {
         return String.format("{%d,%s,%s,%d}", category_id, category, tag, status);
