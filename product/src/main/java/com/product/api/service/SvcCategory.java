@@ -5,4 +5,5 @@ import com.product.api.entity.Category;
 
 public interface SvcCategory {
     public List<Category> getCategories();
-}
+    Category save(Category category);
+}   

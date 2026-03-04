@@ -1,22 +1,31 @@
 package com.product.api.controller;
-import java.util.Arrays;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.product.api.entity.Category;
+import com.product.api.service.SvcCategory;
 
 
 @RestController
-public class CtrlCategory{
-    
-    @GetMapping("/category")
-    public List<Category> getCategories(){
-        List<Category> categories = Arrays.asList(
-            new Category (1, "Lentes","lens"),
-            new Category(2, "Sombreros", "som")
-        ); 
-        return categories;
+@RequestMapping("/category")
+public class CtrlCategory {
+
+    @Autowired
+    SvcCategory svc;
+
+    @GetMapping
+    public List<Category> getCategories() {
+        return svc.getCategories();
+    }
+
+    @PostMapping(value = "/add")
+    public Category postCategory(@RequestBody Category category) {
+        return svc.save(category);
     }
 }

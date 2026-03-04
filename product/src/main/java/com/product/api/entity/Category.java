@@ -1,5 +1,8 @@
 package com.product.api.entity;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
@@ -8,22 +11,29 @@ import jakarta.persistence.Table;
 public class Category {
     
     @Id
-    private int category_id;
-    private String category;
+    @GeneratedValue (strategy=GenerationType.IDENTITY)
+    @Column(name = "category_id")
+    private Integer category_id;
+    
     private String tag;
-    private int status;
+
+    @Column(name = "category")
+    private String category;
+    
+
+    private Integer status;
 
     public Category() {
     }
 
-    public Category(int category_id, String category, String tag) {
+    public Category(Integer category_id, String category, String tag) {
         this.category_id = category_id;
         this.category = category;
         this.tag = tag;
         status = 1;
     }
 
-    public int getCategory_id() {
+    public Integer getCategory_id() {
         return category_id;
     }
 
@@ -35,11 +45,11 @@ public class Category {
         return tag;
     }   
 
-    public int getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(Integer status) {
         if (status == 0 || status == 1) {
             this.status = status;
         } else {
@@ -55,7 +65,7 @@ public class Category {
         this.tag = tag;
     }
 
-    public void setCategory_id(int category_id) {
+    public void setCategory_id(Integer category_id) {
         this.category_id = category_id;
     }
     
