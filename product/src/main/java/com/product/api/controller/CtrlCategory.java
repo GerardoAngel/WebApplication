@@ -36,26 +36,26 @@ public class CtrlCategory {
     }
 
     @PostMapping
-    public ResponseEntity<ApiResponse> create(@Valid @RequestBody DtoCategoryIn in) {
+    public ResponseEntity<Void> create(@Valid @RequestBody DtoCategoryIn in) {
     	svc.create(in);
-    	return ResponseEntity.ok(new ApiResponse("La categoría ha sido registrada"));
+    	return ResponseEntity.ok().build();
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponse> update(@PathVariable("id") Integer id, @Valid @RequestBody DtoCategoryIn in) {
+    public ResponseEntity<Void> update(@PathVariable("id") Integer id, @Valid @RequestBody DtoCategoryIn in) {
     	svc.update(in, id);
-    	return ResponseEntity.ok(new ApiResponse("La categoría ha sido actualizada"));
+    	return ResponseEntity.ok().build();
     }
 
     @PatchMapping("/{id}/enable")
-    public ResponseEntity<ApiResponse> enable(@PathVariable Integer id) {
+    public ResponseEntity<Void> enable(@PathVariable Integer id) {
     	svc.enable(id);
-    	return ResponseEntity.ok(new ApiResponse("La categoría ha sido activada"));
+    	return ResponseEntity.ok().build();
     }
 
     @PatchMapping("/{id}/disable")
-    public ResponseEntity<ApiResponse> disable(@PathVariable Integer id) {
+    public ResponseEntity<Void> disable(@PathVariable Integer id) {
     	svc.disable(id);
-    	return ResponseEntity.ok(new ApiResponse("La categoría ha sido desactivada"));
+    	return ResponseEntity.ok().build();
     }
 }
