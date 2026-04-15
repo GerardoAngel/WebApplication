@@ -1,7 +1,7 @@
 package com.product.api.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-
+import jakarta.validation.constraints.NotNull;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -18,10 +18,16 @@ public class ProductImage {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonProperty("product_image_id")
     @Column(name = "product_image_id")
+
+    /*Esto recuerdo qué lo estaba agregando en el lab pero posiblemente lo hice mal
+      investigando me salió qué no debería usar la anotación NotNull cuando es un campo autogenerado
+      y haciendo las pruebas de postman uno de los errores qué tuve fue por esto, pero funcionó tras quitarlo
+      o dejarlo comentado. Solo lo dejo cómo muestra de qué intente usarlo aunque probablemente no de la forma correcta
+     */
     // @NotNull(message="El product_image_id es obligatorio")
     private Integer productImageId;
 
-    // @NotNull(message="El product_id es obligatorio")
+    @NotNull(message="El product_id es obligatorio")
     @Column(name = "product_id")
     @JsonProperty("product_id")
     private Integer productId;
