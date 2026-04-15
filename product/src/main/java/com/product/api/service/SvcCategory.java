@@ -7,8 +7,6 @@ import com.product.api.entity.Category;
 
 public interface SvcCategory {
 	
-//    public ResponseEntity<List<Category>> getCategories();
-//    Category save(Category category);
     
     public List<Category> findAll(); // reemplazar el anterior getCategories()
     public List<Category> findActive();
