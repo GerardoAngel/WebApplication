@@ -8,7 +8,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotNull;
 
 
 @Entity
@@ -19,10 +18,10 @@ public class ProductImage {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonProperty("product_image_id")
     @Column(name = "product_image_id")
-    @NotNull(message="El product_image_id es obligatorio")
+    // @NotNull(message="El product_image_id es obligatorio")
     private Integer productImageId;
 
-    @NotNull(message="El product_id es obligatorio")
+    // @NotNull(message="El product_id es obligatorio")
     @Column(name = "product_id")
     @JsonProperty("product_id")
     private Integer productId;

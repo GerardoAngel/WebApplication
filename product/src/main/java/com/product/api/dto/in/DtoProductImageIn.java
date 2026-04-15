@@ -7,7 +7,7 @@ import jakarta.validation.constraints.NotNull;
 
 public class DtoProductImageIn {
     
-	@JsonProperty("Product_id")
+	@JsonProperty("product_id")
 	@NotNull(message="El ProductId es obligatorio")
 	private Integer ProductId;
 

@@ -32,13 +32,17 @@ public class SvcProductImageImp implements SvcProductImage {
     private String uploadImages;
 
     @Override
-    public void upload(DtoProductImageIn in) {
+    public ProductImage getProductImages(Integer productId) {
         try {
-            // Validamos que exista el producto
-            ProductImage productImage = repo.findByProductId(in.getProductId());
-            if (productImage == null)
-                throw new ApiException(HttpStatus.NOT_FOUND, "El id del producto no existe");
+            return repo.findByProductId(productId);
+        } catch (DataAccessException e) {
+            throw new DBAccessException(e);
+        }
+    }
 
+    @Override
+    public String upload(Integer productId, DtoProductImageIn in) {
+        try {
             // Eliminar el prefijo "data:image/png;base64," si existe
             if (in.getImage().startsWith("data:image")) {
                 int commaIndex = in.getImage().indexOf(",");
@@ -50,7 +54,7 @@ public class SvcProductImageImp implements SvcProductImage {
             // Decodifica la cadena Base64 a bytes
             byte[] imageBytes = Base64.getDecoder().decode(in.getImage());
 
-            // Genera un nombre único para la imagen (se asume extensión PNG)
+            // Genera un nombre único para la imagen
             String fileName = UUID.randomUUID().toString() + ".png";
 
             // Construye la ruta completa donde se guardará la imagen
@@ -62,14 +66,29 @@ public class SvcProductImageImp implements SvcProductImage {
             // Escribir el archivo en el sistema de archivos
             Files.write(imagePath, imageBytes);
 
-            // Solo actualizamos la imagen del objeto que ya recuperamos del repositorio
+            // Crear nueva entidad y guardar en base de datos
+            ProductImage productImage = new ProductImage();
+            productImage.setProductId(productId);
             productImage.setImage("/" + uploadDir + "/img/product/" + fileName);
-
-            // Guardamos la ruta de la imagen
+            productImage.setStatus(1);
             repo.save(productImage);
+
+            return "La imagen ha sido registrada";
 
         } catch (IOException e) {
             throw new ApiException(HttpStatus.INTERNAL_SERVER_ERROR, "Error al guardar el archivo");
+        } catch (DataAccessException e) {
+            throw new DBAccessException(e);
+        }
+    }
+
+    @Override
+    public String deleteProductImage(Integer productImageId) {
+        try {
+            ProductImage productImage = repo.findById(productImageId)
+                .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "La imagen no existe"));
+            repo.delete(productImage);
+            return "La imagen ha sido eliminada";
         } catch (DataAccessException e) {
             throw new DBAccessException(e);
         }
