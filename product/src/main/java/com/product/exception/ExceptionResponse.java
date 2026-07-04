@@ -13,6 +13,7 @@ public class ExceptionResponse {
 	private HttpStatus error;
 	private String message;
 	private String path;
+	
 	public LocalDateTime getTimestamp() {
 		return timestamp;
 	}
